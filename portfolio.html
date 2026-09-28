@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kareem Ashraf — Data Scientist</title>
+<meta name="description" content="Kareem Ashraf — entry-level data scientist in Cairo. Python, SQL and Power BI work: automated data pipelines, exploratory analysis and decision dashboards.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E8EAE5;
+  --paper-2:#DFE2DC;
+  --ink:#12191C;
+  --graphite:#4A555A;
+  --plot:#1B6E63;
+  --signal:#E3A21A;
+  --rule:rgba(18,25,28,.16);
+  --rule-soft:rgba(18,25,28,.08);
+
+  --sans:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+
+  --gutter:9.5rem;
+  --pad:clamp(1.15rem,4.5vw,3.25rem);
+  --maxw:1180px;
+
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1417;
+    --paper-2:#151D21;
+    --ink:#E7E9E4;
+    --graphite:#94A2A6;
+    --plot:#57BCA9;
+    --signal:#F0B841;
+    --rule:rgba(231,233,228,.20);
+    --rule-soft:rgba(231,233,228,.10);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1417;
+  --paper-2:#151D21;
+  --ink:#E7E9E4;
+  --graphite:#94A2A6;
+  --plot:#57BCA9;
+  --signal:#F0B841;
+  --rule:rgba(231,233,228,.20);
+  --rule-soft:rgba(231,233,228,.10);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:calc(4.5rem + env(safe-area-inset-top,0px))}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--serif);
+  font-size:clamp(1rem,.96rem + .18vw,1.075rem);
+  line-height:1.62;
+  font-optical-sizing:auto;
+  -webkit-font-smoothing:antialiased;
+}
+img,svg{max-width:100%}
+a{color:var(--plot);text-decoration:none;text-underline-offset:.22em;text-decoration-thickness:1px}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:2px}
+
+.skip{position:absolute;left:-9999px;top:0}
+.skip:focus{left:var(--pad);top:.6rem;z-index:50;background:var(--ink);color:var(--paper);padding:.5rem .8rem;font-family:var(--sans)}
+
+/* ---------- shell ---------- */
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad)}
+
+/* ---------- header ---------- */
+.masthead{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:40;
+  background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid var(--rule-soft);
+}
+.masthead .wrap{display:flex;align-items:center;gap:1rem;height:4.5rem}
+.mark{font-family:var(--sans);font-variation-settings:"wdth" 88;font-weight:700;letter-spacing:-.018em;font-size:1.02rem;color:var(--ink);display:flex;align-items:center;gap:.6rem}
+.mark:hover{text-decoration:none}
+.mark span{color:var(--graphite);font-weight:500}
+.mark img{width:2.1rem;height:2.1rem;border-radius:50%;object-fit:cover;flex-shrink:0;border:1px solid var(--rule)}
+.nav{margin-left:auto;display:flex;align-items:center;gap:clamp(.9rem,2.2vw,1.7rem)}
+.nav a{font-family:var(--sans);font-size:.9rem;font-weight:500;color:var(--graphite)}
+.nav a:hover{color:var(--ink);text-decoration:none}
+@media (max-width:640px){.nav a[data-opt]{display:none}}
+.themebtn{
+  font-family:var(--sans);font-size:.82rem;font-weight:600;
+  color:var(--ink);background:transparent;
+  border:1px solid var(--rule);border-radius:999px;
+  padding:.34rem .78rem;cursor:pointer;line-height:1.4;
+}
+.themebtn:hover{border-color:var(--ink)}
+
+/* ---------- axis grid ---------- */
+.band{border-top:1px solid var(--rule-soft)}
+.band:first-of-type{border-top:0}
+.grid{display:grid;grid-template-columns:1fr;gap:1.1rem;padding-block:clamp(3rem,7vw,5.5rem)}
+@media (min-width:900px){
+  .grid{grid-template-columns:var(--gutter) minmax(0,1fr);gap:0}
+  .axis{border-right:1px solid var(--rule-soft);padding-right:1.6rem}
+  .field{padding-left:clamp(1.8rem,4vw,3.2rem)}
+}
+.axis h2{
+  margin:0;font-family:var(--sans);font-weight:600;font-size:.92rem;
+  letter-spacing:.005em;color:var(--graphite);position:sticky;top:6rem;
+}
+.axis h2::before{
+  content:"";display:block;width:1.4rem;height:2px;background:var(--signal);margin-bottom:.55rem;
+}
+@media (max-width:899px){.axis h2{position:static}}
+
+/* ---------- hero ---------- */
+.hero{padding-block:clamp(2.6rem,7vw,4.5rem) clamp(2rem,4vw,3rem)}
+.hero-top{display:flex;align-items:center;gap:clamp(1rem,3vw,2rem);flex-wrap:wrap}
+.hero-photo{
+  width:clamp(4.5rem,9vw,7rem);height:clamp(4.5rem,9vw,7rem);
+  border-radius:50%;object-fit:cover;flex-shrink:0;
+  border:1px solid var(--rule);
+}
+h1{
+  font-family:var(--sans);
+  font-variation-settings:"wdth" 82;
+  font-weight:700;
+  font-size:clamp(3.4rem,13.5vw,9rem);
+  line-height:.86;
+  letter-spacing:-.035em;
+  margin:0 0 clamp(1.4rem,3vw,2rem);
+  text-wrap:balance;
+}
+h1 .ln{display:block}
+.lede{max-width:34em;margin:0 0 1.5rem;font-size:clamp(1.1rem,1rem + .55vw,1.4rem);line-height:1.5}
+.lede em{font-style:italic;color:var(--graphite)}
+.actions{display:flex;flex-wrap:wrap;gap:.7rem;align-items:center}
+.btn{
+  font-family:var(--sans);font-weight:600;font-size:.94rem;
+  display:inline-block;padding:.72rem 1.3rem;border-radius:999px;
+  background:var(--signal);color:#12191C;border:1px solid transparent;
+}
+.btn:hover{text-decoration:none;filter:brightness(1.06)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn.ghost:hover{border-color:var(--ink);filter:none}
+
+/* ---------- trace ---------- */
+.trace{margin-top:clamp(2.5rem,6vw,4rem)}
+.trace svg{display:block;width:100%;height:auto}
+.trace .sig{
+  fill:none;stroke:var(--ink);stroke-width:1.25;
+  stroke-linejoin:round;stroke-linecap:round;
+  vector-effect:non-scaling-stroke;
+}
+.trace .zero{stroke:var(--rule);stroke-width:1;stroke-dasharray:2 5;vector-effect:non-scaling-stroke}
+.trace .peak{stroke:var(--signal);stroke-width:1.5;vector-effect:non-scaling-stroke}
+.draw{stroke-dasharray:9000;stroke-dashoffset:9000;animation:draw 2.1s cubic-bezier(.22,.75,.2,1) .25s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.draw{animation:none;stroke-dashoffset:0}}
+.cap{
+  font-family:var(--sans);font-size:.84rem;color:var(--graphite);
+  margin-top:.7rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+  border-top:1px solid var(--rule-soft);padding-top:.55rem;
+}
+
+/* ---------- facts ---------- */
+.facts{
+  display:grid;gap:0 clamp(1.5rem,4vw,3rem);
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));
+  margin:0;
+}
+.facts div{padding:1.05rem 0;border-top:1px solid var(--rule-soft)}
+.facts dt{font-family:var(--sans);font-size:.83rem;font-weight:600;color:var(--graphite);margin-bottom:.15rem}
+.facts dd{margin:0;font-size:1.05rem;line-height:1.35}
+
+/* ---------- work ---------- */
+.proj{padding-block:clamp(2rem,4vw,2.8rem);border-top:1px solid var(--rule)}
+.proj:first-child{border-top:0;padding-top:0}
+.proj:last-child{padding-bottom:0}
+.proj h3{
+  font-family:var(--sans);font-variation-settings:"wdth" 88;font-weight:700;
+  font-size:clamp(1.55rem,1.2rem + 1.5vw,2.3rem);line-height:1.08;letter-spacing:-.02em;
+  margin:0 0 .55rem;
+}
+.proj .role{font-family:var(--sans);font-size:.88rem;color:var(--graphite);margin:0 0 1.2rem}
+.steps{display:grid;gap:1.1rem 2.2rem;margin:0 0 1.35rem}
+@media (min-width:720px){.steps{grid-template-columns:repeat(3,1fr)}}
+.steps h4{
+  font-family:var(--sans);font-size:.83rem;font-weight:600;color:var(--graphite);
+  margin:0 0 .3rem;padding-left:.75rem;border-left:2px solid var(--signal);
+}
+.steps p{margin:0;font-size:.99rem;line-height:1.55;max-width:34em}
+.steps code{font-family:var(--sans);font-size:.92em;font-weight:600;background:var(--paper-2);padding:.04em .34em;border-radius:3px}
+.stack{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;padding:0;margin:0}
+.stack li{
+  font-family:var(--sans);font-size:.82rem;font-weight:500;color:var(--graphite);
+  border:1px solid var(--rule);border-radius:999px;padding:.24rem .68rem;
+}
+
+/* ---------- method (sequence) ---------- */
+.flow{list-style:none;margin:0;padding:0;counter-reset:s;display:grid;gap:0}
+@media (min-width:860px){.flow{grid-template-columns:repeat(6,1fr);gap:0}}
+.flow li{counter-increment:s;padding:.95rem 0 .95rem 1.1rem;border-top:1px solid var(--rule-soft);position:relative}
+@media (min-width:860px){
+  .flow li{border-top:2px solid var(--rule);padding:1rem 1rem 0 0}
+  .flow li::after{content:"";position:absolute;top:-2px;left:0;width:34%;height:2px;background:var(--signal)}
+}
+.flow li::before{
+  content:counter(s);position:absolute;left:0;top:.95rem;
+  font-family:var(--sans);font-size:.78rem;font-weight:700;color:var(--signal);
+}
+@media (min-width:860px){.flow li::before{position:static;display:block;margin-bottom:.3rem}}
+.flow b{display:block;font-family:var(--sans);font-weight:600;font-size:.97rem;margin-bottom:.15rem}
+.flow span{font-size:.92rem;color:var(--graphite);line-height:1.45;display:block;max-width:22em}
+.note{margin:1.8rem 0 0;max-width:38em;color:var(--graphite);font-size:1rem}
+
+/* ---------- toolkit ---------- */
+.kit{display:grid;gap:0 clamp(1.5rem,4vw,3rem);grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));margin:0}
+.kit section{padding:1.15rem 0;border-top:1px solid var(--rule-soft)}
+.kit h3{font-family:var(--sans);font-size:.9rem;font-weight:600;margin:0 0 .5rem}
+.kit ul{list-style:none;margin:0;padding:0}
+.kit li{font-size:.98rem;color:var(--graphite);line-height:1.75}
+
+/* ---------- timeline ---------- */
+.tl{list-style:none;margin:0;padding:0}
+.tl li{padding:1.3rem 0;border-top:1px solid var(--rule-soft);display:grid;gap:.15rem 2rem}
+.tl li:first-child{border-top:0;padding-top:0}
+@media (min-width:720px){.tl li{grid-template-columns:8.5rem minmax(0,1fr)}}
+.tl .when{font-family:var(--sans);font-size:.86rem;font-weight:600;color:var(--graphite);padding-top:.2rem}
+.tl h3{font-family:var(--sans);font-size:1.12rem;font-weight:700;margin:0 0 .1rem;letter-spacing:-.01em}
+.tl .org{margin:0 0 .5rem;color:var(--graphite);font-size:.98rem}
+.tl ul{margin:0;padding-left:1.05rem}
+.tl li li{border:0;padding:0;display:list-item;margin-bottom:.3rem;font-size:.99rem;line-height:1.55}
+.tl li li::marker{color:var(--signal)}
+
+/* ---------- contact ---------- */
+.reach{display:grid;gap:0 clamp(1.5rem,4vw,3rem);grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr));margin:1.6rem 0 0}
+.reach div{padding:1rem 0;border-top:1px solid var(--rule-soft)}
+.reach dt{font-family:var(--sans);font-size:.83rem;font-weight:600;color:var(--graphite);margin-bottom:.18rem}
+.reach dd{margin:0;font-size:1.02rem;word-break:break-word}
+.big{font-size:clamp(1.5rem,1.1rem + 2vw,2.5rem);line-height:1.15;font-family:var(--sans);font-weight:700;letter-spacing:-.022em;margin:0 0 1rem;max-width:16em}
+
+footer{border-top:1px solid var(--rule-soft);padding-block:1.8rem 2.4rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:.6rem 1.4rem;justify-content:space-between;font-family:var(--sans);font-size:.85rem;color:var(--graphite)}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="mark" href="#top"><img src="data:image/jpeg;base64,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" alt="Kareem Ashraf">Kareem Ashraf <span>Data scientist</span></a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#work">Work</a>
+      <a href="#method" data-opt>Method</a>
+      <a href="#toolkit" data-opt>Toolkit</a>
+      <a href="#background">Background</a>
+      <a href="#contact">Contact</a>
+      <button class="themebtn" id="theme" type="button" aria-live="polite">Dark</button>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="wrap hero" id="top">
+    <div class="hero-top"><img class="hero-photo" src="data:image/jpeg;base64,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" alt="Kareem Ashraf"><h1><span class="ln">Kareem</span><span class="ln">Ashraf</span></h1></div>
+    <p class="lede">Entry-level data scientist in Cairo. I take raw feeds and transactional tables, clean them into something trustworthy, and turn them into models and dashboards a team can act on. <em>Currently training with the Digital Egypt Pioneers Initiative and finishing a CS &amp; Mathematics degree at Ain Shams.</em></p>
+    <div class="actions">
+      <a class="btn" href="mailto:kareemv35@gmail.com">Email Kareem</a>
+      <a class="btn ghost" href="https://github.com/kareemv35-ai" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn ghost" href="https://linkedin.com/in/kareem-ashraf-857aa6356" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+
+    <figure class="trace">
+      <svg viewBox="0 0 1200 200" role="img" aria-label="A seismogram trace showing background tremor, a large event and a smaller aftershock." preserveAspectRatio="none" style="height:clamp(120px,22vw,200px)">
+        <line class="zero" x1="0" y1="100" x2="1200" y2="100"></line>
+        <line class="peak" x1="430" y1="8" x2="430" y2="192"></line>
+        <path class="sig draw" d="M0.0,100.6 L2.5,98.7 L5.0,98.5 L7.5,98.6 L10.0,97.9 L12.5,99.3 L15.0,100.4 L17.5,100.9 L20.0,101.4 L22.5,99.5 L25.0,99.3 L27.5,100.5 L30.0,99.8 L32.5,102.8 L35.0,98.0 L37.5,99.5 L40.0,99.8 L42.5,99.2 L45.0,104.1 L47.5,101.0 L50.0,98.7 L52.5,98.1 L55.0,95.7 L57.5,99.6 L60.0,101.3 L62.5,98.3 L65.0,98.7 L67.5,100.3 L70.0,101.5 L72.5,99.6 L75.0,99.9 L77.5,102.2 L80.0,98.5 L82.5,103.3 L85.0,98.2 L87.5,106.0 L90.0,98.0 L92.5,98.8 L95.0,99.1 L97.5,97.1 L100.0,95.7 L102.5,97.8 L105.0,97.2 L107.5,100.2 L110.0,97.5 L112.5,97.0 L115.0,105.7 L117.5,101.5 L120.0,100.8 L122.5,98.8 L125.0,103.6 L127.5,100.3 L130.0,100.7 L132.5,102.7 L135.0,99.2 L137.5,101.8 L140.0,101.7 L142.5,97.7 L145.0,98.8 L147.5,100.6 L150.0,97.4 L152.5,97.0 L155.0,95.9 L157.5,100.6 L160.0,102.6 L162.5,101.3 L165.0,99.2 L167.5,99.8 L170.0,97.9 L172.5,96.6 L175.0,102.7 L177.5,102.7 L180.0,99.5 L182.5,98.4 L185.0,98.9 L187.5,101.1 L190.0,97.7 L192.5,97.0 L195.0,102.0 L197.5,105.7 L200.0,97.0 L202.5,99.3 L205.0,101.2 L207.5,99.2 L210.0,101.2 L212.5,98.7 L215.0,98.5 L217.5,99.2 L220.0,100.9 L222.5,104.0 L225.0,96.7 L227.5,101.0 L230.0,102.8 L232.5,101.7 L235.0,101.9 L237.5,100.3 L240.0,100.1 L242.5,100.8 L245.0,102.6 L247.5,100.8 L250.0,101.1 L252.5,103.1 L255.0,103.4 L257.5,101.5 L260.0,98.1 L262.5,105.4 L265.0,98.7 L267.5,100.0 L270.0,96.7 L272.5,99.2 L275.0,97.9 L277.5,100.0 L280.0,100.5 L282.5,97.6 L285.0,102.5 L287.5,102.9 L290.0,101.4 L292.5,97.5 L295.0,97.2 L297.5,102.0 L300.0,107.6 L302.5,104.3 L305.0,97.4 L307.5,92.7 L310.0,99.7 L312.5,101.4 L315.0,102.9 L317.5,100.1 L320.0,93.0 L322.5,94.8 L325.0,98.4 L327.5,103.1 L330.0,105.1 L332.5,98.9 L335.0,100.2 L337.5,102.3 L340.0,103.0 L342.5,100.4 L345.0,102.6 L347.5,101.3 L350.0,100.8 L352.5,96.8 L355.0,96.7 L357.5,99.0 L360.0,101.5 L362.5,105.8 L365.0,102.2 L367.5,108.6 L370.0,101.1 L372.5,95.9 L375.0,86.0 L377.5,92.2 L380.0,101.0 L382.5,108.0 L385.0,121.2 L387.5,114.9 L390.0,97.4 L392.5,85.1 L395.0,73.1 L397.5,88.6 L400.0,103.9 L402.5,123.5 L405.0,134.2 L407.5,120.4 L410.0,85.1 L412.5,57.0 L415.0,64.6 L417.5,86.2 L420.0,113.5 L422.5,133.7 L425.0,150.8 L427.5,114.1 L430.0,78.1 L432.5,49.1 L435.0,66.6 L437.5,90.8 L440.0,116.8 L442.5,141.5 L445.0,126.9 L447.5,102.9 L450.0,78.1 L452.5,65.9 L455.0,61.2 L457.5,97.1 L460.0,127.6 L462.5,133.0 L465.0,128.2 L467.5,99.1 L470.0,75.4 L472.5,77.2 L475.0,82.1 L477.5,104.0 L480.0,113.8 L482.5,126.8 L485.0,119.1 L487.5,93.5 L490.0,82.2 L492.5,80.8 L495.0,90.3 L497.5,103.4 L500.0,122.7 L502.5,126.3 L505.0,110.3 L507.5,95.4 L510.0,77.6 L512.5,86.1 L515.0,90.0 L517.5,104.0 L520.0,119.5 L522.5,117.2 L525.0,103.0 L527.5,94.3 L530.0,86.9 L532.5,94.1 L535.0,101.5 L537.5,107.4 L540.0,110.0 L542.5,110.4 L545.0,98.4 L547.5,89.1 L550.0,87.2 L552.5,92.7 L555.0,96.3 L557.5,107.9 L560.0,110.3 L562.5,111.1 L565.0,100.7 L567.5,97.1 L570.0,93.0 L572.5,97.6 L575.0,98.7 L577.5,108.8 L580.0,108.9 L582.5,106.4 L585.0,98.4 L587.5,95.9 L590.0,89.6 L592.5,96.7 L595.0,103.6 L597.5,112.3 L600.0,101.6 L602.5,107.5 L605.0,99.9 L607.5,96.2 L610.0,96.1 L612.5,95.0 L615.0,106.7 L617.5,102.5 L620.0,104.3 L622.5,100.8 L625.0,98.0 L627.5,90.1 L630.0,90.5 L632.5,96.7 L635.0,101.9 L637.5,106.1 L640.0,108.0 L642.5,101.6 L645.0,97.0 L647.5,95.7 L650.0,99.5 L652.5,105.0 L655.0,100.5 L657.5,105.5 L660.0,101.0 L662.5,96.3 L665.0,98.3 L667.5,97.2 L670.0,97.7 L672.5,98.4 L675.0,103.2 L677.5,99.0 L680.0,103.3 L682.5,101.0 L685.0,94.8 L687.5,97.0 L690.0,103.2 L692.5,101.9 L695.0,98.0 L697.5,98.1 L700.0,102.4 L702.5,97.6 L705.0,94.8 L707.5,94.4 L710.0,97.0 L712.5,103.3 L715.0,101.8 L717.5,99.5 L720.0,102.3 L722.5,97.1 L725.0,95.9 L727.5,95.9 L730.0,100.1 L732.5,98.3 L735.0,105.6 L737.5,106.1 L740.0,101.6 L742.5,100.1 L745.0,103.6 L747.5,101.7 L750.0,99.8 L752.5,99.5 L755.0,97.4 L757.5,96.7 L760.0,103.8 L762.5,107.4 L765.0,109.1 L767.5,100.4 L770.0,90.5 L772.5,94.2 L775.0,91.6 L777.5,114.4 L780.0,124.7 L782.5,116.0 L785.0,93.9 L787.5,83.0 L790.0,91.6 L792.5,106.7 L795.0,121.6 L797.5,118.9 L800.0,101.5 L802.5,88.8 L805.0,86.7 L807.5,92.3 L810.0,108.8 L812.5,112.8 L815.0,107.6 L817.5,98.2 L820.0,92.0 L822.5,89.9 L825.0,97.1 L827.5,110.7 L830.0,106.7 L832.5,104.3 L835.0,93.6 L837.5,94.8 L840.0,91.9 L842.5,105.9 L845.0,113.2 L847.5,105.5 L850.0,98.2 L852.5,88.8 L855.0,93.2 L857.5,101.3 L860.0,108.7 L862.5,105.3 L865.0,103.7 L867.5,99.2 L870.0,95.1 L872.5,101.0 L875.0,102.0 L877.5,104.8 L880.0,99.1 L882.5,94.9 L885.0,89.8 L887.5,96.1 L890.0,98.0 L892.5,105.3 L895.0,105.4 L897.5,102.3 L900.0,98.5 L902.5,96.5 L905.0,96.6 L907.5,100.0 L910.0,104.5 L912.5,103.3 L915.0,100.3 L917.5,97.6 L920.0,94.2 L922.5,98.0 L925.0,96.6 L927.5,101.9 L930.0,99.9 L932.5,100.3 L935.0,98.6 L937.5,98.8 L940.0,99.6 L942.5,99.7 L945.0,101.4 L947.5,101.1 L950.0,98.5 L952.5,101.3 L955.0,102.7 L957.5,100.5 L960.0,98.1 L962.5,99.6 L965.0,99.6 L967.5,98.6 L970.0,101.3 L972.5,101.1 L975.0,100.1 L977.5,98.9 L980.0,96.7 L982.5,103.1 L985.0,98.6 L987.5,97.6 L990.0,95.6 L992.5,102.3 L995.0,100.2 L997.5,100.8 L1000.0,101.8 L1002.5,102.1 L1005.0,99.0 L1007.5,101.8 L1010.0,101.7 L1012.5,100.2 L1015.0,97.6 L1017.5,101.4 L1020.0,99.8 L1022.5,98.2 L1025.0,102.0 L1027.5,100.7 L1030.0,97.5 L1032.5,98.7 L1035.0,101.9 L1037.5,98.0 L1040.0,100.7 L1042.5,104.9 L1045.0,103.5 L1047.5,101.8 L1050.0,102.6 L1052.5,98.6 L1055.0,98.4 L1057.5,97.5 L1060.0,104.1 L1062.5,96.6 L1065.0,101.3 L1067.5,99.3 L1070.0,97.5 L1072.5,97.8 L1075.0,97.7 L1077.5,100.0 L1080.0,97.7 L1082.5,102.4 L1085.0,100.5 L1087.5,99.9 L1090.0,101.8 L1092.5,97.9 L1095.0,100.9 L1097.5,96.9 L1100.0,98.8 L1102.5,99.0 L1105.0,100.0 L1107.5,101.1 L1110.0,94.5 L1112.5,97.7 L1115.0,100.7 L1117.5,95.1 L1120.0,100.1 L1122.5,101.7 L1125.0,98.8 L1127.5,101.0 L1130.0,101.6 L1132.5,99.9 L1135.0,99.9 L1137.5,100.1 L1140.0,104.4 L1142.5,96.3 L1145.0,97.4 L1147.5,100.9 L1150.0,99.7 L1152.5,95.4 L1155.0,100.8 L1157.5,96.3 L1160.0,97.0 L1162.5,96.9 L1165.0,96.6 L1167.5,99.7 L1170.0,101.3 L1172.5,101.5 L1175.0,101.2 L1177.5,99.4 L1180.0,103.8 L1182.5,99.2 L1185.0,98.7 L1187.5,99.5 L1190.0,99.8 L1192.5,103.1 L1195.0,101.2 L1197.5,100.2 L1200.0,100.4"></path>
+      </svg>
+      <figcaption class="cap">
+        <span>Magnitude readings from the USGS feed — the raw input to Project Aftershock.</span>
+        <span>Marker: main event</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <div class="band"><div class="wrap grid">
+    <div class="axis"><h2>At a glance</h2></div>
+    <div class="field">
+      <dl class="facts">
+        <div><dt>Based in</dt><dd>Cairo, Egypt</dd></div>
+        <div><dt>Studying</dt><dd>BSc Computer Science &amp; Mathematics, Ain Shams</dd></div>
+        <div><dt>Graduating</dt><dd>2026</dd></div>
+        <div><dt>Looking for</dt><dd>Junior data scientist or analyst roles</dd></div>
+      </dl>
+    </div>
+  </div></div>
+
+  <div class="band" id="work"><div class="wrap grid">
+    <div class="axis"><h2>Selected work</h2></div>
+    <div class="field">
+
+      <article class="proj">
+        <h3>Project Aftershock</h3>
+        <p class="role">Automated ingestion and risk triage for regional seismic telemetry</p>
+        <div class="steps">
+          <div>
+            <h4>Problem</h4>
+            <p>Seismic readings arrive from the USGS API as deeply nested JSON. Anyone wanting to analyse a region had to unpick that structure by hand before any real work started.</p>
+          </div>
+          <div>
+            <h4>Approach</h4>
+            <p>Python ingestion scripts built on <code>requests</code>, <code>json</code>, <code>csv</code> and <code>pathlib</code> that pull the feed, flatten the payload, filter by region and write clean analytical tables to disk.</p>
+          </div>
+          <div>
+            <h4>Result</h4>
+            <p>Roughly 40% less manual preparation per run, and severity categorisation applied automatically so exploratory analysis can start from a tidy dataset.</p>
+          </div>
+        </div>
+        <ul class="stack">
+          <li>Python</li><li>Pandas</li><li>Requests</li><li>JSON API</li><li>ETL</li>
+        </ul>
+      </article>
+
+      <article class="proj">
+        <h3>Sales performance dashboard</h3>
+        <p class="role">Relational modelling and an interactive Power BI report</p>
+        <div class="steps">
+          <div>
+            <h4>Problem</h4>
+            <p>Transactional sales records sat across several tables with no shared model, so regional questions took a new query every time someone asked one.</p>
+          </div>
+          <div>
+            <h4>Approach</h4>
+            <p>Multi-table SQL with joins and layered aggregations, reshaped into a normalised dimensional schema that Power BI could sit on top of cleanly.</p>
+          </div>
+          <div>
+            <h4>Result</h4>
+            <p>A dashboard with KPI cards, regional trend lines and drill-down filters, so the answers come from the report instead of from another ad-hoc query.</p>
+          </div>
+        </div>
+        <ul class="stack">
+          <li>SQL</li><li>Power BI</li><li>Data modelling</li><li>DAX</li><li>Dimensional schema</li>
+        </ul>
+      </article>
+
+    </div>
+  </div></div>
+
+  <div class="band" id="method"><div class="wrap grid">
+    <div class="axis"><h2>How I work</h2></div>
+    <div class="field">
+      <ol class="flow">
+        <li><b>Business understanding</b><span>What decision is this meant to change?</span></li>
+        <li><b>Data understanding</b><span>Where it comes from, what it is missing.</span></li>
+        <li><b>Preparation</b><span>Cleaning, joins, feature work.</span></li>
+        <li><b>Modelling</b><span>Supervised or unsupervised, fitted to the question.</span></li>
+        <li><b>Evaluation</b><span>Honest metrics and error analysis.</span></li>
+        <li><b>Deployment</b><span>A pipeline or report someone else can run.</span></li>
+      </ol>
+      <p class="note">This is CRISP-DM, and it is the backbone of the training I am doing at DEPI. I keep to it because the first and last stages are the ones that usually decide whether a model is worth anything — the modelling in the middle is rarely the hard part.</p>
+    </div>
+  </div></div>
+
+  <div class="band" id="toolkit"><div class="wrap grid">
+    <div class="axis"><h2>Toolkit</h2></div>
+    <div class="field">
+      <div class="kit">
+        <section>
+          <h3>Analyse</h3>
+          <ul><li>Python</li><li>Pandas</li><li>NumPy</li><li>Exploratory data analysis</li></ul>
+        </section>
+        <section>
+          <h3>Model</h3>
+          <ul><li>Scikit-learn</li><li>Supervised learning</li><li>Unsupervised learning</li><li>Deep learning basics</li></ul>
+        </section>
+        <section>
+          <h3>Communicate</h3>
+          <ul><li>Power BI</li><li>Matplotlib</li><li>Seaborn</li><li>Data storytelling</li></ul>
+        </section>
+        <section>
+          <h3>Store &amp; ship</h3>
+          <ul><li>SQL, MySQL, PostgreSQL</li><li>Git and GitHub</li><li>Jupyter, VS Code</li><li>Conda / Miniforge</li></ul>
+        </section>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="band" id="background"><div class="wrap grid">
+    <div class="axis"><h2>Background</h2></div>
+    <div class="field">
+      <ol class="tl">
+        <li>
+          <div class="when">2026 — now</div>
+          <div>
+            <h3>Data Science &amp; AI Trainee</h3>
+            <p class="org">Digital Egypt Pioneers Initiative (DEPI), Ministry of Communications and Information Technology</p>
+            <ul>
+              <li>Selected for a competitive national training programme funded by MCIT.</li>
+              <li>Hands-on modules in Python for data analysis, machine learning, deep learning foundations and Power BI.</li>
+              <li>End-to-end pipelines structured with CRISP-DM, from business understanding through to evaluation.</li>
+              <li>Weekly technical coaching, agile collaboration and a professional communication track.</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div class="when">Until 2026</div>
+          <div>
+            <h3>BSc Computer Science &amp; Mathematics</h3>
+            <p class="org">Ain Shams University, Cairo</p>
+            <ul>
+              <li>Coursework in linear algebra, calculus, statistics and probability, and measure theory.</li>
+              <li>Data structures and algorithms, and database systems.</li>
+            </ul>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div></div>
+
+  <div class="band" id="contact"><div class="wrap grid">
+    <div class="axis"><h2>Contact</h2></div>
+    <div class="field">
+      <p class="big">Open to junior data science and analyst roles, internships and freelance work.</p>
+      <p style="max-width:34em;margin:0;color:var(--graphite)">The fastest way to reach me is email. If you want to see how I write code before that, the GitHub is the honest version.</p>
+      <dl class="reach">
+        <div><dt>Email</dt><dd><a href="mailto:kareemv35@gmail.com">kareemv35@gmail.com</a></dd></div>
+        <div><dt>Phone</dt><dd><a href="tel:+201068269333">010 6826 9333</a></dd></div>
+        <div><dt>GitHub</dt><dd><a href="https://github.com/kareemv35-ai" target="_blank" rel="noopener">kareemv35-ai</a></dd></div>
+        <div><dt>LinkedIn</dt><dd><a href="https://linkedin.com/in/kareem-ashraf-857aa6356" target="_blank" rel="noopener">kareem-ashraf</a></dd></div>
+      </dl>
+    </div>
+  </div></div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Kareem Ashraf, Cairo</span>
+    <span>Built by hand in HTML and CSS</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('theme');
+  function systemDark(){return window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches}
+  function isDark(){var t=root.getAttribute('data-theme');return t?t==='dark':systemDark()}
+  function label(){btn.textContent=isDark()?'Light':'Dark';btn.setAttribute('aria-label','Switch to '+(isDark()?'light':'dark')+' theme')}
+  try{var saved=localStorage.getItem('ka-theme');if(saved==='dark'||saved==='light')root.setAttribute('data-theme',saved)}catch(e){}
+  label();
+  btn.addEventListener('click',function(){
+    var next=isDark()?'light':'dark';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem('ka-theme',next)}catch(e){}
+    label();
+  });
+})();
+</script>
+</body>
+</html>
